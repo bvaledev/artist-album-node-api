@@ -4,6 +4,7 @@ import { AddAccount, AddAccountModel } from '@/domain/usecases'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers'
 import { HttpRequest } from '@/presentation/protocols'
+import { Validation } from '@/presentation/protocols/validation'
 import { SignUpController } from './signup-controller'
 
 export const mockAddAccountStub = (): AddAccount => {
@@ -15,9 +16,19 @@ export const mockAddAccountStub = (): AddAccount => {
   return new AddAccountStub()
 }
 
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate(input: any): Error {
+      return null
+    }
+  }
+  return new ValidationStub()
+}
+
 interface SutTypes {
   sut: SignUpController
   addAccountStub: AddAccount
+  validationStub: Validation
 }
 
 const mockRequest = (): HttpRequest => ({
@@ -31,24 +42,22 @@ const mockRequest = (): HttpRequest => ({
 
 const makeSut = (): SutTypes => {
   const addAccountStub = mockAddAccountStub()
-  const sut = new SignUpController(addAccountStub)
+  const validationStub = makeValidation()
+  const sut = new SignUpController(validationStub, addAccountStub)
   return {
     sut,
-    addAccountStub
+    addAccountStub,
+    validationStub
   }
 }
 
 describe('SignupController', () => {
-  test('Should SignupController return 400 if an required fields not provided', async () => {
-    const { sut } = makeSut()
-    const httpResponse = await sut.handle({
-      body: {
-        name: 'any_name',
-        password: 'any_password',
-        passwordConfirmation: 'any_password'
-      }
-    })
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
+  test('Should call Validation with correct values', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 
   test('Should call AddAccount with correct values', async () => {
