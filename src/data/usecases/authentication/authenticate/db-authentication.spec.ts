@@ -1,3 +1,4 @@
+import { Encrypter } from '@/data/protocols/criptography/encrypter'
 import { HashComparer } from '@/data/protocols/criptography/hash-comparer'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/authentication/load-account-by-email-repository'
 import { mockAccountModel } from '@/data/test'
@@ -9,6 +10,15 @@ const makeFakeAuthentication = (): AuthenticationModel => ({
   email: 'any_email@email',
   password: 'any_password'
 })
+
+export const mockEncrypterStub = (): Encrypter => {
+  class EncrypterStub implements Encrypter {
+    async encrypt(id: string): Promise<string> {
+      return await Promise.resolve('any_token')
+    }
+  }
+  return new EncrypterStub()
+}
 
 export const mockLoadAccountByEmailRepositoryStub = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
@@ -33,16 +43,19 @@ interface SutTypes {
   sut: DbAuthentication
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
   hashCompareStub: HashComparer
+  encrypterStub: Encrypter
 }
 
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepositoryStub()
   const hashCompareStub = mockHashCompareStub()
-  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashCompareStub)
+  const encrypterStub = mockEncrypterStub()
+  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashCompareStub, encrypterStub)
   return {
     sut,
     loadAccountByEmailRepositoryStub,
-    hashCompareStub
+    hashCompareStub,
+    encrypterStub
   }
 }
 
@@ -91,5 +104,12 @@ describe('DbAuthentication UseCase', () => {
     jest.spyOn(hashCompareStub, 'compare').mockReturnValueOnce(new Promise((resolve) => resolve(false)))
     const accessToken = await sut.auth(makeFakeAuthentication())
     expect(accessToken).toBe(null)
+  })
+
+  test('Should call Encrypter with correct id', async () => {
+    const { sut, encrypterStub } = makeSut()
+    const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
+    await sut.auth(makeFakeAuthentication())
+    expect(encryptSpy).toHaveBeenCalledWith('any_id')
   })
 })
