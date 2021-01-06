@@ -13,6 +13,7 @@
     "git-commit-msg-linter": "^3.0.0"
   },
   "devDependencies": {
+    "eslint-config-standard-with-typescript": "^19.0.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
