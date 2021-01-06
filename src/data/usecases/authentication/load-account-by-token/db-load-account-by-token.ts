@@ -1,6 +1,7 @@
 import { LoadAccountByToken } from '@/domain/usecases/authentication/load-account-by-token'
 import { Decrypter } from '@/data/protocols/criptography/dencrypter'
 import { UserModel } from '@/domain/models'
+import { mockAccountModel } from '@/data/test'
 
 export class DbLoadAccountByToken implements LoadAccountByToken {
   constructor(
@@ -8,7 +9,10 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
   ) { }
 
   async loadByToken(accessToken: string, role?: string): Promise<UserModel> {
-    await this.decrypter.decrypt(accessToken)
+    const token = await this.decrypter.decrypt(accessToken)
+    if (token) {
+      return mockAccountModel()
+    }
     return null
   }
 }
