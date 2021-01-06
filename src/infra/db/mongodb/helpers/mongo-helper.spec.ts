@@ -1,5 +1,10 @@
 import { MongoHelper as sut } from './mongo-helpers'
 
+const mockCollectionData = (): any => ({
+  _id: 'any_id',
+  name: 'any_name'
+})
+
 describe('Mongodb Helper', () => {
   beforeAll(async () => {
     await sut.connect(process.env.MONGO_URL)
@@ -23,5 +28,10 @@ describe('Mongodb Helper', () => {
     await sut.disconnect()
     accountconnection = await sut.getCollection('accounts')
     expect(accountconnection).toBeTruthy()
+  })
+
+  test('Should map a collection correctly', () => {
+    const collection = sut.mapper(mockCollectionData())
+    expect(collection.id).toBeTruthy()
   })
 })
