@@ -3,7 +3,6 @@ import { AddAccountRepository } from '@/data/protocols/db/authentication/add-acc
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/authentication/load-account-by-email-repository'
 import { mockAccountModel, mockAddAccountParams, mockAddAccountRepository, mockHasher } from '@/data/test'
 import { UserModel } from '@/domain/models'
-
 import { DbAddAccount } from './db-add-account'
 
 interface SutTypes {
@@ -83,5 +82,12 @@ describe('DbAddAccount UseCase', () => {
     const loadSpy = jest.spyOn(loadAccountByEmailStub, 'loadByEmail')
     await sut.add(mockAddAccountParams())
     expect(loadSpy).toHaveBeenCalledWith(mockAddAccountParams().email)
+  })
+
+  test('Should return null if LoadAccountByEmailRepository not return null', async () => {
+    const { sut, loadAccountByEmailStub } = makeSut()
+    jest.spyOn(loadAccountByEmailStub, 'loadByEmail').mockReturnValueOnce(Promise.resolve(mockAccountModel()))
+    const addAccountRepository = await sut.add(mockAddAccountParams())
+    expect(addAccountRepository).toBeNull()
   })
 })
