@@ -1,23 +1,37 @@
 import { Hasher } from '@/data/protocols/criptography/hasher'
 import { AddAccountRepository } from '@/data/protocols/db/authentication/add-account-repository'
+import { LoadAccountByEmailRepository } from '@/data/protocols/db/authentication/load-account-by-email-repository'
 import { mockAccountModel, mockAddAccountParams, mockAddAccountRepository, mockHasher } from '@/data/test'
+import { UserModel } from '@/domain/models'
 
 import { DbAddAccount } from './db-add-account'
 
 interface SutTypes {
   sut: DbAddAccount
   hasherStub: Hasher
-  addAccountRepoStub: AddAccountRepository
+  addAccountRepoStub: AddAccountRepository,
+  loadAccountByEmailStub: LoadAccountByEmailRepository
+}
+
+const mockLoadAccountByEmailStub = (): LoadAccountByEmailRepository => {
+  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
+    async loadByEmail(email: string): Promise<UserModel> {
+      return await Promise.resolve(null)
+    }
+  }
+  return new LoadAccountByEmailRepositoryStub()
 }
 
 const makeSut = (): SutTypes => {
   const hasherStub = mockHasher()
   const addAccountRepoStub = mockAddAccountRepository()
-  const sut = new DbAddAccount(hasherStub, addAccountRepoStub)
+  const loadAccountByEmailStub = mockLoadAccountByEmailStub()
+  const sut = new DbAddAccount(hasherStub, addAccountRepoStub, loadAccountByEmailStub)
   return {
     sut,
     hasherStub,
-    addAccountRepoStub
+    addAccountRepoStub,
+    loadAccountByEmailStub
   }
 }
 
@@ -62,5 +76,12 @@ describe('DbAddAccount UseCase', () => {
     const { sut } = makeSut()
     const addAccountRepository = await sut.add(mockAddAccountParams())
     expect(addAccountRepository).toEqual({ ...mockAccountModel(), password: 'hashed_password' })
+  })
+
+  test('Should call LoadAccountByEmailRepository with correct email ', async () => {
+    const { sut, loadAccountByEmailStub } = makeSut()
+    const loadSpy = jest.spyOn(loadAccountByEmailStub, 'loadByEmail')
+    await sut.add(mockAddAccountParams())
+    expect(loadSpy).toHaveBeenCalledWith(mockAddAccountParams().email)
   })
 })
