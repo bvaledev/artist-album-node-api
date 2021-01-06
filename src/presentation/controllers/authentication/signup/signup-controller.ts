@@ -1,4 +1,5 @@
 import { AddAccount } from '@/domain/usecases'
+import { serverError } from '@/presentation/helpers'
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 
 export class SignUpController implements Controller {
@@ -7,13 +8,16 @@ export class SignUpController implements Controller {
   ) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const { name, email, password } = httpRequest.body
-    await this.addAccount.add({
-      name,
-      email,
-      password
-    })
-
-    return null
+    try {
+      const { name, email, password } = httpRequest.body
+      await this.addAccount.add({
+        name,
+        email,
+        password
+      })
+      return null
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
