@@ -12,6 +12,7 @@ const mockAccountInsert = async (): Promise<void> => {
     password: 'any_password'
   })
 }
+
 describe('AuthenticateMongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -114,6 +115,12 @@ describe('AuthenticateMongo Repository', () => {
         accessToken: 'any_token'
       })
       const account = await sut.loadByToken('any_token', 'admin')
+      expect(account).toBeFalsy()
+    })
+
+    test('Should return null if loadByToken fails', async () => {
+      const sut = makeSut()
+      const account = await sut.loadByToken('any_email@email.com')
       expect(account).toBeFalsy()
     })
   })
