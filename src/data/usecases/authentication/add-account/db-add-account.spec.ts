@@ -1,23 +1,41 @@
+import { Hasher } from '@/data/protocols/criptography/hasher'
 import { AddAccountRepository } from '@/data/protocols/db/authentication/add-account-repository'
 import { mockAccountModel, mockAddAccountParams, mockAddAccountRepository } from '@/data/test/mock-account'
 import { DbAddAccount } from './db-add-account'
 
+
+export const mockHasher = (): Hasher => {
+  class HasherStub implements Hasher {
+    async hash(value: string): Promise<string> {
+      return await Promise.resolve('hashed_password')
+    }
+  }
+  return new HasherStub()
+}
+
 interface SutTypes {
   sut: DbAddAccount
+  hasherStub: Hasher
   addAccountRepoStub: AddAccountRepository
 }
 
 const makeSut = (): SutTypes => {
+  const hasherStub = mockHasher()
   const addAccountRepoStub = mockAddAccountRepository()
-  const sut = new DbAddAccount(addAccountRepoStub)
+  const sut = new DbAddAccount(hasherStub, addAccountRepoStub)
   return {
     sut,
+    hasherStub,
     addAccountRepoStub
   }
 }
 
 describe('DbAddAccount UseCase', () => {
   test('Should call Hasher with correct password', async () => {
+    const { sut, hasherStub } = makeSut()
+    const encryptSpy = jest.spyOn(hasherStub, 'hash')
+    await sut.add(mockAddAccountParams())
+    expect(encryptSpy).toHaveBeenCalledWith('any_password')
   })
 
   test('Should call AddAccountRepository with correct values', async () => {
