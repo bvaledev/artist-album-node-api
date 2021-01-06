@@ -38,6 +38,15 @@ describe('DbAddAccount UseCase', () => {
     expect(encryptSpy).toHaveBeenCalledWith('any_password')
   })
 
+  test('Should throw if Hasher throws', async () => {
+    const { sut, hasherStub } = makeSut()
+    jest.spyOn(hasherStub, 'hash').mockImplementationOnce((): never => {
+      throw new Error()
+    })
+    const promise = sut.add(mockAddAccountParams())
+    await expect(promise).rejects.toThrow()
+  })
+
   test('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepoStub } = makeSut()
     const addSpy = jest.spyOn(addAccountRepoStub, 'add')
