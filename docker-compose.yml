@@ -2,7 +2,7 @@ version: "3"
 services:
   mongo:
     container_name: mongo-container
-    image: mongo:4
+    image: mongo:4.4.2
     restart: always
     volumes:
       - ./data:/data/db
@@ -15,14 +15,14 @@ services:
     restart: always
     command: bash -c "npm install --only=prod && npm run debug"
     environment:
-      - MONGO_URL=mongodb://mongo:27017/clean-node-api
+      - MONGO_URL=mongodb://localhost:27017/artistsalbuns
       - JWT_SECRET=vlI0aHfnFp28kIxkJS_DpraYWhCfEycR3T-T7Fr8PLzn1VhsbyxjNSBVcy77zl6hF_5qcOF9Re7Acb9rg7XnLzZkqhvsMUmzsvcmnotc30xtecifl2PgNpFqPKrd1sH-6HWF5KtlgVabFVAmNQm24BjEYIU3RlxJa9or6UXxQ6s
-      - PORT=1234
+      - PORT=3000
     volumes:
       - ./dist/:/usr/src/clean-node-api/dist/
       - ./package.json:/usr/src/clean-node-api/package.json
     ports:
-      - "1234:1234"
+      - "3000:3000"
       - "9222:9222" #ndm
     links:
       - mongo
