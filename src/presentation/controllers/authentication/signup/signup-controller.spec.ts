@@ -1,10 +1,11 @@
 import { mockAccountModel } from '@/data/test'
 import { UserModel } from '@/domain/models'
-import { AddAccount, AddAccountModel } from '@/domain/usecases'
+import { AddAccount, AddAccountModel, Authentication } from '@/domain/usecases'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers'
 import { HttpRequest } from '@/presentation/protocols'
 import { Validation } from '@/presentation/protocols/validation'
+import { mockAuthenticationStub } from '../login/login-controller.spec'
 import { SignUpController } from './signup-controller'
 
 export const mockAddAccountStub = (): AddAccount => {
@@ -25,12 +26,6 @@ const makeValidation = (): Validation => {
   return new ValidationStub()
 }
 
-interface SutTypes {
-  sut: SignUpController
-  addAccountStub: AddAccount
-  validationStub: Validation
-}
-
 const mockRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
@@ -40,14 +35,23 @@ const mockRequest = (): HttpRequest => ({
   }
 })
 
+interface SutTypes {
+  sut: SignUpController
+  addAccountStub: AddAccount
+  validationStub: Validation
+  authenticationStub: Authentication
+}
+
 const makeSut = (): SutTypes => {
   const addAccountStub = mockAddAccountStub()
   const validationStub = makeValidation()
-  const sut = new SignUpController(validationStub, addAccountStub)
+  const authenticationStub = mockAuthenticationStub()
+  const sut = new SignUpController(validationStub, addAccountStub, authenticationStub)
   return {
     sut,
     addAccountStub,
-    validationStub
+    validationStub,
+    authenticationStub
   }
 }
 
@@ -86,15 +90,18 @@ describe('SignupController', () => {
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new ServerError()))
   })
+
   test('Should return 403 AddAccount returns null', async () => {
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockReturnValueOnce(new Promise(resolve => resolve(null)))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })
+
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok(mockAccountModel()))
+    const equal = { ...mockAccountModel(), accessToken: 'any_token', password: undefined }
+    expect(httpResponse).toEqual(ok(equal))
   })
 })
