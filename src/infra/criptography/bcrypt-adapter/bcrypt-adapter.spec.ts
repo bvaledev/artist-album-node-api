@@ -20,4 +20,10 @@ describe('Bcrypt adapter', () => {
     await sut.hash('any_value')
     expect(encryptSpy).toHaveBeenCalledWith('any_value', salt)
   })
+
+  test('Should return a valid hash on hash sucess', async () => {
+    const sut = makeSut()
+    const hash = await sut.hash('any_value')
+    expect(hash).toBe('hashed_value')
+  })
 })
