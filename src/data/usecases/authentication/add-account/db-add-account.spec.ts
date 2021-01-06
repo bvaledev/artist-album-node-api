@@ -3,7 +3,6 @@ import { AddAccountRepository } from '@/data/protocols/db/authentication/add-acc
 import { mockAccountModel, mockAddAccountParams, mockAddAccountRepository } from '@/data/test/mock-account'
 import { DbAddAccount } from './db-add-account'
 
-
 export const mockHasher = (): Hasher => {
   class HasherStub implements Hasher {
     async hash(value: string): Promise<string> {
@@ -54,7 +53,7 @@ describe('DbAddAccount UseCase', () => {
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
       email: 'any_email@email.com',
-      password: 'any_password'
+      password: 'hashed_password'
     })
   })
   test('Should throw if AddAccount throws', async () => {
@@ -65,9 +64,10 @@ describe('DbAddAccount UseCase', () => {
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow()
   })
+
   test('Should return an accont on sucess', async () => {
     const { sut } = makeSut()
     const addAccountRepository = await sut.add(mockAddAccountParams())
-    expect(addAccountRepository).toEqual(mockAccountModel())
+    expect(addAccountRepository).toEqual({ ...mockAccountModel(), password: 'hashed_password' })
   })
 })
