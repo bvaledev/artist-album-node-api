@@ -28,8 +28,23 @@ describe('JWT Adapter', () => {
       const accessToken = await sut.encrypt('any_id')
       expect(accessToken).toBe('any_token')
     })
+
+    test('Should throw if sign throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const accessToken = sut.encrypt('any_id')
+      await expect(accessToken).rejects.toThrow()
+    })
   })
 
   describe('verify()', () => {
+    test('Should call verify with correct values', async () => {
+      const sut = makeSut()
+      const verifySpy = jest.spyOn(jwt, 'verify')
+      await sut.decrypt('any_token')
+      expect(verifySpy).toHaveBeenCalledWith('any_token', 'secret')
+    })
   })
 })
