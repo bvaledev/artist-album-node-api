@@ -17,6 +17,9 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddAccount UseCase', () => {
+  test('Should call Hasher with correct password', async () => {
+  })
+
   test('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepoStub } = makeSut()
     const addSpy = jest.spyOn(addAccountRepoStub, 'add')
