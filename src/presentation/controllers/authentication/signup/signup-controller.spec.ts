@@ -2,7 +2,7 @@ import { mockAccountModel } from '@/data/test'
 import { UserModel } from '@/domain/models'
 import { AddAccount, AddAccountModel } from '@/domain/usecases'
 import { ServerError } from '@/presentation/errors'
-import { serverError } from '@/presentation/helpers'
+import { ok, serverError } from '@/presentation/helpers'
 import { HttpRequest } from '@/presentation/protocols'
 import { SignUpController } from './signup-controller'
 
@@ -57,5 +57,11 @@ describe('SignupController', () => {
     })
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new ServerError()))
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok(mockAccountModel()))
   })
 })
