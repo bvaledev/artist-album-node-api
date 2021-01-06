@@ -13,6 +13,7 @@
     "@typescript-eslint/comma-spacing": "off",
     "@typescript-eslint/space-before-function-paren": "off",
     "@typescript-eslint/method-signature-style": "off",
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }
