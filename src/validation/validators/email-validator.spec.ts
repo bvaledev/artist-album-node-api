@@ -15,4 +15,10 @@ describe('EmailValidator', () => {
     const error = sut.validate({ password: 'any_password', passwordConfirmation: 'any_password' })
     expect(error).toBeFalsy()
   })
+
+  test('Should not return error if email is correct', () => {
+    const sut = makeSut()
+    const error = sut.validate({ email: 'valid_email@email.com' })
+    expect(error).toBeFalsy()
+  })
 })
