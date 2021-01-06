@@ -1,6 +1,8 @@
 import { mockAccountModel } from '@/data/test'
 import { UserModel } from '@/domain/models'
 import { AddAccount, AddAccountModel } from '@/domain/usecases'
+import { ServerError } from '@/presentation/errors'
+import { serverError } from '@/presentation/helpers'
 import { HttpRequest } from '@/presentation/protocols'
 import { SignUpController } from './signup-controller'
 
@@ -46,5 +48,14 @@ describe('SignupController', () => {
       email: 'any_email@email.com',
       password: 'any_password'
     })
+  })
+
+  test('Should return 500 if AddAccount throws', async () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce((): never => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError()))
   })
 })
