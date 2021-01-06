@@ -1,21 +1,19 @@
 import { AddAccount } from '@/domain/usecases'
-import { EmailInUseError, MissingParamError } from '@/presentation/errors'
+import { EmailInUseError } from '@/presentation/errors'
+import { Validation } from '@/presentation/protocols/validation'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers'
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 
 export class SignUpController implements Controller {
   constructor(
+    private readonly validation: Validation,
     private readonly addAccount: AddAccount
   ) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field))
-        }
-      }
+      const error = this.validation.validate(httpRequest.body)
+      if (error) { return badRequest(error) }
       const { name, email, password } = httpRequest.body
       const account = await this.addAccount.add({
         name,
