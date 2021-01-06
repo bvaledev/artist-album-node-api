@@ -2,7 +2,15 @@
   "name": "artist-album-node-api",
   "version": "1.1.0",
   "description": "Api para cadastro e listagem de artistas e albuns musicais",
-  "keywords": ["nodejs","jest","mongodb","tdd","solid","album","artistas"],
+  "keywords": [
+    "nodejs",
+    "jest",
+    "mongodb",
+    "tdd",
+    "solid",
+    "album",
+    "artistas"
+  ],
   "author": "Brendo Vale",
   "license": "GPL-3.0-or-later",
   "repository": "https://github.com/bvaledev/artist-album-node-api.git",
@@ -14,7 +22,8 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -29,6 +38,7 @@
     "@types/jest": "^26.0.19",
     "@types/mongodb": "^3.6.3",
     "@types/supertest": "^2.0.10",
+    "coveralls": "^3.1.0",
     "eslint-config-standard-with-typescript": "^19.0.1",
     "faker": "^5.1.0",
     "git-commit-msg-linter": "^3.0.0",
