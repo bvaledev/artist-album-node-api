@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "6ebc8bda-faa8-4e00-8095-50f2100a066d",
+		"name": "ArtistAlbumsTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Fulano de Tal\",\r\n    \"email\" : \"fulano_01@gmail.com\",\r\n    \"password\" : \"123456789\",\r\n    \"passwordConfirmation\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1234/api/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1234",
+							"path": [
+								"api",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"fulano_01@gmail.com\",\r\n    \"password\" : \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1234/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1234",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
