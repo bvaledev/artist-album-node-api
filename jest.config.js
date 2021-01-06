@@ -5,6 +5,7 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/index.ts',
+    '!<rootDir>/src/**/http-helpers.ts',
     '!<rootDir>/src/main/**'
   ],
   preset: '@shelf/jest-mongodb',
