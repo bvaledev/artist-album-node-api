@@ -1,9 +1,7 @@
-import { ObjectId } from 'mongodb'
-
 export interface ArtistModel {
   id: string
   name: string
-  userId: ObjectId | String
+  userId: string
   albuns?: {
     images: string[]
     name: string
