@@ -5,6 +5,14 @@ const mockCollectionData = (): any => ({
   name: 'any_name'
 })
 
+const mockCollectionListData = (): any[] => ([
+  mockCollectionData(),
+  mockCollectionData(),
+  mockCollectionData(),
+  mockCollectionData(),
+  mockCollectionData()
+])
+
 describe('Mongodb Helper', () => {
   beforeAll(async () => {
     await sut.connect(process.env.MONGO_URL)
@@ -33,5 +41,10 @@ describe('Mongodb Helper', () => {
   test('Should map a collection correctly', () => {
     const collection = sut.mapper(mockCollectionData())
     expect(collection.id).toBeTruthy()
+  })
+
+  test('Should map a collection list', () => {
+    const collectionList = sut.mapperList(mockCollectionListData())
+    expect(collectionList[2].id).toBeTruthy()
   })
 })
