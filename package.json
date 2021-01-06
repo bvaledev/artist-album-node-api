@@ -1,8 +1,11 @@
 {
-  "name": "artist-album-list",
+  "name": "artist-album-node-api",
   "version": "1.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Api para cadastro e listagem de artistas e albuns musicais",
+  "keywords": ["nodejs","jest","mongodb","tdd","solid","album","artistas"],
+  "author": "Brendo Vale",
+  "license": "GPL-3.0-or-later",
+  "repository": "https://github.com/bvaledev/artist-album-node-api.git",
   "scripts": {
     "start": "node dist/main/server.js",
     "build": "tsc -p tsconfig-build.json",
@@ -13,9 +16,6 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
