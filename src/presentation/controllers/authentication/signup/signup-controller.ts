@@ -23,6 +23,7 @@ export class SignUpController implements Controller {
       if (!account) {
         return forbidden(new EmailInUseError())
       }
+      // TODO - ADD ACCESS TOKEN WITH ACCOUNT
       return ok(account)
     } catch (error) {
       return serverError(error)
