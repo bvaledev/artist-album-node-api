@@ -104,5 +104,17 @@ describe('AuthenticateMongo Repository', () => {
       expect(account.accessToken).toBe('any_token')
       expect(account.role).toBe('admin')
     })
+
+    test('Should return null on loadByToken with invalid role', async () => {
+      const sut = makeSut()
+      await authCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        accessToken: 'any_token'
+      })
+      const account = await sut.loadByToken('any_token', 'admin')
+      expect(account).toBeFalsy()
+    })
   })
 })
