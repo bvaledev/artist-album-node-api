@@ -12,7 +12,7 @@ const mockAccountInsert = async (): Promise<void> => {
     password: 'any_password'
   })
 }
-describe('Authenticate Mongo Repository', () => {
+describe('AuthenticateMongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -58,6 +58,21 @@ describe('Authenticate Mongo Repository', () => {
       const sut = makeSut()
       const account = await sut.loadByEmail('any_email@email.com')
       expect(account).toBeFalsy()
+    })
+  })
+
+  describe('loadByToken()', () => {
+    test('Should return an account on loadByToken success without role', async () => {
+      const sut = makeSut()
+      await authCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        accessToken: 'any_token'
+      })
+      const account = await sut.loadByToken('any_token')
+      expect(account).toBeTruthy()
+      expect(account.accessToken).toBe('any_token')
     })
   })
 })
