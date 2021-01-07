@@ -14,7 +14,7 @@ const mockArtistModel = (): ArtistModel => ({
 const mockUpdateArtistRepositoryStub = (): UpdateArtistRepository => {
     class UpdateArtistRepositoryStub implements UpdateArtistRepository {
         async update(id: string, artist: AddArtistModel): Promise<ArtistModel> {
-            return Promise.resolve(null)
+            return Promise.resolve(mockArtistModel())
         }
     }
     return new UpdateArtistRepositoryStub()
@@ -91,4 +91,22 @@ describe('DbUpdateArtist UseCase', () => {
         const promise = sut.update('any_id', mockUpdateArtist)
         expect(promise).rejects.toThrow()
     })
+
+    test('Should return Updated ArtistModel on success', async () => {
+        const { sut } = makeSut()
+        const mockUpdateArtist = {
+            name: 'any_name'
+        }
+        const response = await sut.update('any_id', mockUpdateArtist)
+        expect(response).toEqual(mockArtistModel())
+    })
+
+    // test('Should return null if artist alread exists', async () => {
+    //     const { sut } = makeSut()
+    //     const mockAddArtist = {
+    //         name: 'any_name'
+    //     }
+    //     const response = await sut.add(mockAddArtist)
+    //     expect(response).toEqual(null)
+    // })
 })
