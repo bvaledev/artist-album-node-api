@@ -42,4 +42,13 @@ describe('DbAddArtist UseCase', () => {
         await sut.add(mockAddArtist)
         expect(addSpy).toHaveBeenCalledWith(mockAddArtist)
     })
+
+    test('Should return ArtistModel on success', async () => {
+        const { sut } = makeSut()
+        const mockAddArtist = {
+            name: 'any_name'
+        }
+        const response = await sut.add(mockAddArtist)
+        expect(response).toEqual(mockArtistModel())
+    })
 })
