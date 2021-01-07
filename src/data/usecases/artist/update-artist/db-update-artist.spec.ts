@@ -101,12 +101,15 @@ describe('DbUpdateArtist UseCase', () => {
         expect(response).toEqual(mockArtistModel())
     })
 
-    // test('Should return null if artist alread exists', async () => {
-    //     const { sut } = makeSut()
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const response = await sut.add(mockAddArtist)
-    //     expect(response).toEqual(null)
-    // })
+    test('Should return null if artist alread exists', async () => {
+        const { sut, loadArtistByIdRepositoryStub } = makeSut()
+        jest.spyOn(loadArtistByIdRepositoryStub, 'loadById').mockImplementationOnce(() => {
+            return Promise.resolve(mockArtistModel())
+        })
+        const mockUpdateArtist = {
+            name: 'any_name'
+        }
+        const response = await sut.update('any_id', mockUpdateArtist)
+        expect(response).toEqual(null)
+    })
 })
