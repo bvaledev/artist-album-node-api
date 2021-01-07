@@ -1,6 +1,6 @@
 import { AlbumModel } from '@/domain/models'
-import { AddAlbum } from '@/domain/usecases/album/add-album'
+import { AddAlbumModel } from '@/domain/usecases/album';
 
 export interface AddAlbumRepository {
-    add (albumData: AddAlbum): Promise<AlbumModel>
+    add(albumData: AddAlbumModel): Promise<AlbumModel>
 }

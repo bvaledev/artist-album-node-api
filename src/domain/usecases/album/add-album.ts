@@ -1,14 +1,14 @@
-import { AlbumModel, ArtistModel } from '@/domain/models'
+import { AlbumModel } from '@/domain/models'
+import { ObjectId } from 'mongodb'
 
 export type AddAlbumModel = {
-  artist_id: string
+  artist_id: string | ObjectId
   name: string
   year?: string
   youtube?: string
   images: string[]
-  artist?: ArtistModel
 }
 
 export interface AddAlbum {
-  add (albumData: AddAlbumModel): Promise<AlbumModel>
+  add(albumData: AddAlbumModel): Promise<AlbumModel>
 }
