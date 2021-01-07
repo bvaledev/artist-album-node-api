@@ -8,12 +8,12 @@ const mockArtistModel = (): ArtistModel => ({
 })
 
 const mockLoadArtistByIdRepository = (): LoadArtistByIdRepository => {
-    class AddArtistRepositoryStub implements LoadArtistByIdRepository {
+    class LoadArtistByIdRepositoryStub implements LoadArtistByIdRepository {
         async loadById(id: string): Promise<ArtistModel> {
             return Promise.resolve(mockArtistModel())
         }
     }
-    return new AddArtistRepositoryStub()
+    return new LoadArtistByIdRepositoryStub()
 }
 
 type SutType = {
@@ -31,7 +31,7 @@ const makeSut = (): SutType => {
     }
 }
 
-describe('DbAddArtist UseCase', () => {
+describe('DbLoadArtistById UseCase', () => {
     test('Should call LoadArtistByIdRepository with correct value', async () => {
         const { sut, loadArtistById } = makeSut()
         const addSpy = jest.spyOn(loadArtistById, 'loadById')
