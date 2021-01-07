@@ -52,7 +52,6 @@ describe('DbLoadArtistByName UseCase', () => {
         jest.spyOn(loadAllArtists, 'listAll').mockImplementationOnce((): never => {
             throw new Error()
         })
-        const mockAddArtistName = 'any_name'
         const promise = sut.loadAll("DESC", 5, 5)
         await expect(promise).rejects.toThrow()
     })
