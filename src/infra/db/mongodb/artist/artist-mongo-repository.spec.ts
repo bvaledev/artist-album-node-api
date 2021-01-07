@@ -10,6 +10,21 @@ const mockArtistInsert = async (name: string = 'any_name'): Promise<void> => {
   })
 }
 
+const mockArtistInsertMany = async (): Promise<void> => {
+  await mockArtistInsert('aany_1')
+  await mockArtistInsert('bany_2')
+  await mockArtistInsert('cany_3')
+  await mockArtistInsert('dany_4')
+  await mockArtistInsert('eany_5')
+  await mockArtistInsert('fany_6')
+  await mockArtistInsert('gany_7')
+  await mockArtistInsert('hany_8')
+  await mockArtistInsert('iany_9')
+  await mockArtistInsert('jany_10')
+  await mockArtistInsert('kany_11')
+  await mockArtistInsert('lany_12')
+}
+
 const makeSut = (): ArtistMongoRepository => new ArtistMongoRepository()
 
 describe('ArtistMongoRepository', () => {
@@ -51,27 +66,19 @@ describe('ArtistMongoRepository', () => {
 
   describe('loadAll()', () => {
     test('Should return a list of artist ASC', async () => {
-      mockArtistInsert('aany_1') // 0
-      mockArtistInsert('bany_2') // 1
-      mockArtistInsert('cany_3') // 2
-      mockArtistInsert('dany_4') // 3
+      await mockArtistInsertMany()
       const sut = makeSut()
-      const artistList = await sut.listAll('ASC')
-      expect(artistList).toBeTruthy()
-      expect(artistList[0].name).toBe('aany_1')
-      expect(artistList[3].name).toBe('dany_4')
+      const artistList = await sut.listAll('ASC',5, 5)
+      expect(artistList.length).toBe(5)
+      expect(artistList[0].name).toBe('fany_6')
     })
 
     test('Should return a list of artist DESC', async () => {
-      mockArtistInsert('aany_1') // 3
-      mockArtistInsert('bany_2') // 2
-      mockArtistInsert('cany_3') // 1
-      mockArtistInsert('dany_4') // 0
+      await mockArtistInsertMany()
       const sut = makeSut()
-      const artistList = await sut.listAll('DESC')
-      expect(artistList).toBeTruthy()
-      expect(artistList[0].name).toBe('dany_4')
-      expect(artistList[3].name).toBe('aany_1')
+      const artistList = await sut.listAll('DESC',5, 5)
+      expect(artistList.length).toBe(5)
+      expect(artistList[0].name).toBe('gany_7')
     })
   })
 })
