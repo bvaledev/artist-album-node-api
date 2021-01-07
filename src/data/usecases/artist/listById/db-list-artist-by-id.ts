@@ -6,7 +6,6 @@ import { LoadArtistById } from '@/domain/usecases/artists/load-artist-by-id'
 export class DbLoadArtistById implements LoadArtistById {
     constructor(private readonly loadArtistByIdRepository: LoadArtistById) {}
     async loadById(id: string): Promise<ArtistModel> {
-        await this.loadArtistByIdRepository.loadById(id)
-        return null
+        return await this.loadArtistByIdRepository.loadById(id)
     }
 }
