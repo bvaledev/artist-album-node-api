@@ -5,7 +5,7 @@ import { AddArtist, AddArtistModel } from '@/domain/usecases/artists/add-artist'
 export class DbAddArtist implements AddArtist {
     constructor(private readonly addArtistRepository: AddArtistRepository) {}
     async add(artist: AddArtistModel): Promise<ArtistModel> {
-        this.addArtistRepository.add(artist)
-        return null
+        const data = this.addArtistRepository.add(artist)
+        return data
     }
 }
