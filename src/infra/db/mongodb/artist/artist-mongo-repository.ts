@@ -1,11 +1,13 @@
 import { AddArtistRepository } from '@/data/protocols/db/artist/add-artist-repository'
+import { DeleteArtistRepository } from '@/data/protocols/db/artist/delete-artist-repository'
 import { LoadAllArtistsRepository } from '@/data/protocols/db/artist/list-all-artists-repository'
 import { LoadArtistByNameRepository } from '@/data/protocols/db/artist/load-artist-by-name-repository'
 import { ArtistModel } from '@/domain/models'
 import { AddArtistModel } from '@/domain/usecases/artists/add-artist'
+import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helpers'
 
-export class ArtistMongoRepository implements AddArtistRepository, LoadArtistByNameRepository, LoadAllArtistsRepository {
+export class ArtistMongoRepository implements AddArtistRepository, LoadArtistByNameRepository, LoadAllArtistsRepository, DeleteArtistRepository {
   private readonly collection: string = 'artists'
   async add(artist: AddArtistModel): Promise<ArtistModel> {
     const artistCollection = await MongoHelper.getCollection(this.collection)
@@ -23,5 +25,11 @@ export class ArtistMongoRepository implements AddArtistRepository, LoadArtistByN
     const artistCollection = await MongoHelper.getCollection(this.collection)
     const artistData = await artistCollection.find({}).skip(skip).limit(limit).sort({ name: order === 'ASC' ? 1 : -1 }).toArray()
     return artistData && MongoHelper.mapperList(artistData)
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const artistCollection = await MongoHelper.getCollection(this.collection)
+    const action = await artistCollection.deleteOne({ _id: new ObjectId(id) })
+    return !!action.result.ok
   }
 }
