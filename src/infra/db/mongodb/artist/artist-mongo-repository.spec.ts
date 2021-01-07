@@ -4,6 +4,12 @@ import { ArtistMongoRepository } from './artist-mongo-repository'
 
 let artistCollection: Collection
 
+const mockArtistInsert = async (): Promise<void> => {
+  await artistCollection.insertOne({
+    name: 'any_name'
+  })
+}
+
 const makeSut = (): ArtistMongoRepository => new ArtistMongoRepository()
 
 describe('ArtistMongoRepository', () => {
@@ -26,6 +32,17 @@ describe('ArtistMongoRepository', () => {
       const artist = await sut.add({
         name: 'any_name'
       })
+      expect(artist).toBeTruthy()
+      expect(artist.id).toBeTruthy()
+      expect(artist.name).toBe('any_name')
+    })
+  })
+
+  describe('loadByName()', () => {
+    test('Should return an artist on find success', async () => {
+      mockArtistInsert()
+      const sut = makeSut()
+      const artist = await sut.loadByName('any_name')
       expect(artist).toBeTruthy()
       expect(artist.id).toBeTruthy()
       expect(artist.name).toBe('any_name')
