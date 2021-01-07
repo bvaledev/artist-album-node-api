@@ -16,4 +16,5 @@
 - Delete [❌]
 - LoadById [❌]
 - LoadByName [❌]
+- LoadByArtist [❌]
 - LoadAll [❌]
