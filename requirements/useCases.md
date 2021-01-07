@@ -1,3 +1,6 @@
+# Use Cases
+
+## Artistas
 
 - Add [✔]
 - Update [✔]
