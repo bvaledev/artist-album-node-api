@@ -79,4 +79,16 @@ describe('DbUpdateArtist UseCase', () => {
         await sut.update('any_id', mockUpdateArtist)
         expect(updateSpy).toHaveBeenCalledWith('any_id', mockUpdateArtist)
     })
+   
+    test('Should throw if UpdateArtistRepository throws', async () => {
+        const { sut, updateArtistRepositoryStub } = makeSut()
+        jest.spyOn(updateArtistRepositoryStub, 'update').mockImplementationOnce((): never => {
+            throw new Error()
+        })
+        const mockUpdateArtist = {
+            name: 'any_name'
+        }
+        const promise = sut.update('any_id', mockUpdateArtist)
+        expect(promise).rejects.toThrow()
+    })
 })
