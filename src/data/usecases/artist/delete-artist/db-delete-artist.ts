@@ -1,8 +1,5 @@
 import { DeleteArtistRepository } from '@/data/protocols/db/artist/delete-artist-repository'
 import { LoadArtistByIdRepository } from '@/data/protocols/db/artist/load-artist-by-id-repository'
-import { UpdateArtistRepository } from '@/data/protocols/db/artist/update-artist-repository'
-import { ArtistModel } from '@/domain/models'
-import { AddArtistModel } from '@/domain/usecases/artists/add-artist'
 import { DeleteArtist } from '@/domain/usecases/artists/delete-artist'
 
 export class DbDeleteArtist implements DeleteArtist {
