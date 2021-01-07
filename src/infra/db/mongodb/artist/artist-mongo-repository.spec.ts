@@ -61,5 +61,17 @@ describe('ArtistMongoRepository', () => {
       expect(artistList[0].name).toBe('aany_1')
       expect(artistList[3].name).toBe('dany_4')
     })
+
+    test('Should return a list of artist DESC', async () => {
+      mockArtistInsert('aany_1') // 3
+      mockArtistInsert('bany_2') // 2
+      mockArtistInsert('cany_3') // 1
+      mockArtistInsert('dany_4') // 0
+      const sut = makeSut()
+      const artistList = await sut.listAll('DESC')
+      expect(artistList).toBeTruthy()
+      expect(artistList[0].name).toBe('dany_4')
+      expect(artistList[3].name).toBe('aany_1')
+    })
   })
 })
