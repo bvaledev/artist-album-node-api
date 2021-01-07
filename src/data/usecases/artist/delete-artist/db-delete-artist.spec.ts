@@ -77,4 +77,11 @@ describe('DbUpdateArtist UseCase', () => {
         const promise = sut.delete('any_id')
         expect(promise).rejects.toThrow()
     })
+
+    test('Should return true on delete', async () => {
+        const { sut, loadArtistByIdRepositoryStub } = makeSut()
+        jest.spyOn(loadArtistByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve(mockArtistModel()))
+        const response = await sut.delete('any_id')
+        expect(response).toEqual(true)
+    })
 })
