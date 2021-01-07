@@ -70,12 +70,13 @@ describe('DbUpdateArtist UseCase', () => {
     })
    
     test('Should throw if DeleteArtistRepository throws', async () => {
-        const { sut, deleteArtistRepositoryStub } = makeSut()
+        const { sut, deleteArtistRepositoryStub, loadArtistByIdRepositoryStub } = makeSut()
+        jest.spyOn(loadArtistByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve(mockArtistModel()))
         jest.spyOn(deleteArtistRepositoryStub, 'delete').mockImplementationOnce((): never => {
             throw new Error()
         })
         const promise = sut.delete('any_id')
-        expect(promise).rejects.toThrow()
+        await expect(promise).rejects.toThrow()
     })
 
     test('Should return true on delete', async () => {
@@ -83,5 +84,11 @@ describe('DbUpdateArtist UseCase', () => {
         jest.spyOn(loadArtistByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve(mockArtistModel()))
         const response = await sut.delete('any_id')
         expect(response).toEqual(true)
+    })
+
+    test('Should return null if artist not exists', async () => {
+        const { sut } = makeSut()
+        const response = await sut.delete('any_id')
+        expect(response).toEqual(null)
     })
 })
