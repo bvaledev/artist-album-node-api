@@ -19,19 +19,9 @@ export class ArtistMongoRepository implements AddArtistRepository, LoadArtistByN
     return artistData && MongoHelper.mapper(artistData)
   }
 
-  async listAll(order: 'ASC' | 'DESC'): Promise<ArtistModel[]> {
+  async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<ArtistModel[]> {
     const artistCollection = await MongoHelper.getCollection(this.collection)
-    let artistData: ArtistModel[]
-
-    switch (order) {
-      case 'ASC':
-        artistData = await artistCollection.find({}).sort({ name: 1 }).toArray()
-        break
-      case 'DESC':
-        artistData = await artistCollection.find({}).sort({ name: -1 }).toArray()
-        break
-    }
-
+    const artistData = await artistCollection.find({}).skip(skip).limit(limit).sort({ name: order === 'ASC' ? 1 : -1 }).toArray()
     return artistData && MongoHelper.mapperList(artistData)
   }
 }
