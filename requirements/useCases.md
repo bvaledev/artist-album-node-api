@@ -1,20 +1,12 @@
-# Use Cases
 
-## Artistas
+# UseCases
 
-- Add [✔]
-- Update [✔]
-- Delete [✔]
-- LoadById [✔]
-- LoadByName [✔]
-- LoadAll [✔]
-
-## Albums
-
-- Add [❌]
-- Update [❌]
-- Delete [❌]
-- LoadById [❌]
-- LoadByName [❌]
-- LoadByArtist [❌]
-- LoadAll [❌]
+| Artistas      | Albums           |
+| :------------ | :--------------- |
+| [✔]Add        | [❌]Add          |
+| [✔]Update     | [❌]Update       |
+| [✔]Delete     | [❌]Delete       |
+| [✔]LoadById   | [❌]LoadById     |
+| [✔]LoadByName | [❌]LoadByName   |
+| [✔]LoadAll    | [❌]LoadByArtist |
+| -             | [❌]LoadAll      |
