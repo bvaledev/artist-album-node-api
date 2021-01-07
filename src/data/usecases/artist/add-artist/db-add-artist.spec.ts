@@ -35,9 +35,11 @@ const makeSut = (): SutType => {
 describe('DbAddArtist UseCase', () => {
     test('Should call AddArtistRepository with correct value', async () => {
         const { sut, addArtistRepositoryStub } = makeSut()
+        const addSpy = jest.spyOn(addArtistRepositoryStub, 'add')
         const mockAddArtist = {
             name: 'any_name'
         }
         await sut.add(mockAddArtist)
+        expect(addSpy).toHaveBeenCalledWith(mockAddArtist)
     })
 })
