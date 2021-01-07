@@ -75,6 +75,14 @@ describe('ArtistMongoRepository', () => {
       expect(artist).toBeTruthy()
       expect(artist.name).toBe('new_name')
     })
+
+    test('Should return null if update fails', async () => {
+      const sut = makeSut()
+      const artist = await sut.update('5ff74f686ff63d0e30e7eba3', { name: 'new_name' })
+      console.info('update: ', artist)
+      console.log(artist)
+      expect(artist).toBeFalsy()
+    })
   })
 
   describe('loadByName()', () => {
