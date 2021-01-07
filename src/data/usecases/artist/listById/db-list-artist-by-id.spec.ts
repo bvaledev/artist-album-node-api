@@ -36,22 +36,20 @@ describe('DbAddArtist UseCase', () => {
     test('Should call LoadArtistByIdRepository with correct value', async () => {
         const { sut, loadArtistById } = makeSut()
         const addSpy = jest.spyOn(loadArtistById, 'loadById')
-        const mockAddArtist = 'any_id'
-        await sut.loadById(mockAddArtist)
-        expect(addSpy).toHaveBeenCalledWith(mockAddArtist)
+        const mockAddArtistName = 'any_id'
+        await sut.loadById(mockAddArtistName)
+        expect(addSpy).toHaveBeenCalledWith(mockAddArtistName)
     })
    
-    // test('Should throw if AddArtistRepository throws', async () => {
-    //     const { sut, addArtistRepositoryStub } = makeSut()
-    //     jest.spyOn(addArtistRepositoryStub, 'add').mockImplementationOnce((): never => {
-    //         throw new Error()
-    //     })
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const promise = sut.add(mockAddArtist)
-    //     await expect(promise).rejects.toThrow()
-    // })
+    test('Should throw if AddArtistRepository throws', async () => {
+        const { sut, loadArtistById } = makeSut()
+        jest.spyOn(loadArtistById, 'loadById').mockImplementationOnce((): never => {
+            throw new Error()
+        })
+        const mockAddArtistName = 'any_id'
+        const promise = sut.loadById(mockAddArtistName)
+        await expect(promise).rejects.toThrow()
+    })
 
     // test('Should return ArtistModel on success', async () => {
     //     const { sut } = makeSut()
