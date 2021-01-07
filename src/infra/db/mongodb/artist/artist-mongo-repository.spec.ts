@@ -63,6 +63,20 @@ describe('ArtistMongoRepository', () => {
     })
   })
 
+  describe('update()', () => {
+    test('Should return artist on success update', async () => {
+      const sut = makeSut()
+      const newData = await artistCollection.insertOne({ name: 'any_name' })
+      const normalizedData = MongoHelper.mapper(newData.ops[0])
+      console.info('insert: ', newData.ops[0])
+      const artist = await sut.update(normalizedData.id, { name: 'new_name' })
+      console.info('update: ', artist)
+      console.log(artist)
+      expect(artist).toBeTruthy()
+      expect(artist.name).toBe('new_name')
+    })
+  })
+
   describe('loadByName()', () => {
     test('Should return an artist on find success', async () => {
       mockArtistInsert()
@@ -94,9 +108,10 @@ describe('ArtistMongoRepository', () => {
 
   describe('delete()', () => {
     test('Should return true if deleted', async () => {
-      const data = await (await artistCollection.insertOne({ name: 'any_name' })).ops[0]
+      const newData = await artistCollection.insertOne({ name: 'any_name' })
+      const normalizedData = MongoHelper.mapper(newData.ops[0])
       const sut = makeSut()
-      const deleted = await sut.delete(data._id)
+      const deleted = await sut.delete(normalizedData.id)
       expect(deleted).toBe(true)
     })
   })
