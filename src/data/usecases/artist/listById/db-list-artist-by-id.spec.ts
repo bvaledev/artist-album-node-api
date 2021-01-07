@@ -40,7 +40,7 @@ describe('DbLoadArtistById UseCase', () => {
         expect(addSpy).toHaveBeenCalledWith(mockAddArtistName)
     })
    
-    test('Should throw if AddArtistRepository throws', async () => {
+    test('Should throw if LoadArtistByIdRepository throws', async () => {
         const { sut, loadArtistById } = makeSut()
         jest.spyOn(loadArtistById, 'loadById').mockImplementationOnce((): never => {
             throw new Error()
