@@ -68,4 +68,13 @@ describe('DbUpdateArtist UseCase', () => {
         await sut.delete('any_id')
         expect(updateSpy).toHaveBeenCalledWith('any_id')
     })
+   
+    test('Should throw if DeleteArtistRepository throws', async () => {
+        const { sut, deleteArtistRepositoryStub } = makeSut()
+        jest.spyOn(deleteArtistRepositoryStub, 'delete').mockImplementationOnce((): never => {
+            throw new Error()
+        })
+        const promise = sut.delete('any_id')
+        expect(promise).rejects.toThrow()
+    })
 })
