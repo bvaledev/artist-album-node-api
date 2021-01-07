@@ -81,4 +81,13 @@ describe('ArtistMongoRepository', () => {
       expect(artistList[0].name).toBe('gany_7')
     })
   })
+
+  describe('delete()', () => {
+    test('Should return true if deleted', async () => {
+      const data = await (await artistCollection.insertOne({ name: 'any' })).ops[0]
+      const sut = makeSut()
+      const deleted = await sut.delete(data._id)
+      expect(deleted).toBe(true)
+    })
+  })
 })
