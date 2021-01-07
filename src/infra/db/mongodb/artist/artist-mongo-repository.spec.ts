@@ -4,9 +4,9 @@ import { ArtistMongoRepository } from './artist-mongo-repository'
 
 let artistCollection: Collection
 
-const mockArtistInsert = async (): Promise<void> => {
+const mockArtistInsert = async (name: string = 'any_name'): Promise<void> => {
   await artistCollection.insertOne({
-    name: 'any_name'
+    name: name
   })
 }
 
@@ -46,6 +46,20 @@ describe('ArtistMongoRepository', () => {
       expect(artist).toBeTruthy()
       expect(artist.id).toBeTruthy()
       expect(artist.name).toBe('any_name')
+    })
+  })
+
+  describe('loadAll()', () => {
+    test('Should return a list of artist ASC', async () => {
+      mockArtistInsert('aany_1') // 0
+      mockArtistInsert('bany_2') // 1
+      mockArtistInsert('cany_3') // 2
+      mockArtistInsert('dany_4') // 3
+      const sut = makeSut()
+      const artistList = await sut.listAll('ASC')
+      expect(artistList).toBeTruthy()
+      expect(artistList[0].name).toBe('aany_1')
+      expect(artistList[3].name).toBe('dany_4')
     })
   })
 })
