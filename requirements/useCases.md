@@ -8,3 +8,12 @@
 - LoadById [✔]
 - LoadByName [✔]
 - LoadAll [✔]
+
+## Albums
+
+- Add [❌]
+- Update [❌]
+- Delete [❌]
+- LoadById [❌]
+- LoadByName [❌]
+- LoadAll [❌]
