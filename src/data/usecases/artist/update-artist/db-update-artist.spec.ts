@@ -48,7 +48,7 @@ const makeSut = (): SutType => {
 }
 
 describe('DbUpdateArtist UseCase', () => {
-    test('Should call LoadArtistByNameRepository with correct value', async () => {
+    test('Should call LoadArtistByIdRepository with correct value', async () => {
         const { sut, loadArtistByIdRepositoryStub } = makeSut()
         const loadByIdSpy = jest.spyOn(loadArtistByIdRepositoryStub, 'loadById')
         const mockUpdateArtist = {
@@ -58,58 +58,15 @@ describe('DbUpdateArtist UseCase', () => {
         expect(loadByIdSpy).toHaveBeenCalledWith('any_id',)
     })
 
-    // test('Should throw if LoadArtistByNameRepository throws', async () => {
-    //     const { sut, loadArtistByNameRepositoryStub } = makeSut()
-    //     jest.spyOn(loadArtistByNameRepositoryStub, 'loadByName').mockImplementationOnce((): never => {
-    //         throw new Error()
-    //     })
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const promise = sut.add(mockAddArtist)
-    //     await expect(promise).rejects.toThrow()
-    // })
-
-    // test('Should call AddArtistRepository with correct value', async () => {
-    //     const { sut, addArtistRepositoryStub, loadArtistByNameRepositoryStub } = makeSut()
-    //     jest.spyOn(loadArtistByNameRepositoryStub, 'loadByName').mockReturnValue(Promise.resolve(null))
-    //     const addSpy = jest.spyOn(addArtistRepositoryStub, 'add')
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     await sut.add(mockAddArtist)
-    //     expect(addSpy).toHaveBeenCalledWith(mockAddArtist)
-    // })
-   
-    // test('Should throw if AddArtistRepository throws', async () => {
-    //     const { sut, addArtistRepositoryStub, loadArtistByNameRepositoryStub } = makeSut()
-    //     jest.spyOn(loadArtistByNameRepositoryStub, 'loadByName').mockReturnValue(Promise.resolve(null))
-    //     jest.spyOn(addArtistRepositoryStub, 'add').mockImplementationOnce((): never => {
-    //         throw new Error()
-    //     })
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const promise = sut.add(mockAddArtist)
-    //     await expect(promise).rejects.toThrow()
-    // })
-
-    // test('Should return ArtistModel on success', async () => {
-    //     const { sut,loadArtistByNameRepositoryStub } = makeSut()
-    //     jest.spyOn(loadArtistByNameRepositoryStub, 'loadByName').mockReturnValue(Promise.resolve(null))
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const response = await sut.add(mockAddArtist)
-    //     expect(response).toEqual(mockArtistModel())
-    // })
-
-    // test('Should return null if artist alread exists', async () => {
-    //     const { sut } = makeSut()
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const response = await sut.add(mockAddArtist)
-    //     expect(response).toEqual(null)
-    // })
+    test('Should throw if LoadArtistByIdRepository throws', async () => {
+        const { sut, loadArtistByIdRepositoryStub } = makeSut()
+        jest.spyOn(loadArtistByIdRepositoryStub, 'loadById').mockImplementationOnce((): never => {
+            throw new Error()
+        })
+        const mockUpdateArtist = {
+            name: 'any_name'
+        }
+        const promise = sut.update('any_id', mockUpdateArtist)
+        await expect(promise).rejects.toThrow()
+    })
 })
