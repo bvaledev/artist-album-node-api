@@ -53,6 +53,16 @@ describe('ArtistMongoRepository', () => {
     })
   })
 
+  describe('loadById()', () => {
+    test('Should return an artist on find by id success', async () => {
+      const newData = await artistCollection.insertOne({ name: 'any_name' })
+      const sut = makeSut()
+      const artist = await sut.loadById(newData.ops[0].id)
+      expect(artist).toBeTruthy()
+      expect(artist.id).toBeTruthy()
+    })
+  })
+
   describe('loadByName()', () => {
     test('Should return an artist on find success', async () => {
       mockArtistInsert()
@@ -84,7 +94,7 @@ describe('ArtistMongoRepository', () => {
 
   describe('delete()', () => {
     test('Should return true if deleted', async () => {
-      const data = await (await artistCollection.insertOne({ name: 'any' })).ops[0]
+      const data = await (await artistCollection.insertOne({ name: 'any_name' })).ops[0]
       const sut = makeSut()
       const deleted = await sut.delete(data._id)
       expect(deleted).toBe(true)
