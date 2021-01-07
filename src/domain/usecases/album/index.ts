@@ -1,0 +1,6 @@
+export * from '@/domain/usecases/album/add-album'
+export * from '@/domain/usecases/album/update-album'
+export * from '@/domain/usecases/album/delete-album'
+export * from '@/domain/usecases/album/load-album-by-id'
+export * from '@/domain/usecases/album/load-album-by-name'
+export * from '@/domain/usecases/album/load-all-album'

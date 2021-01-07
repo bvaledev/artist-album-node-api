@@ -1,5 +1,10 @@
-export type Albums = {
-  images: string[]
+import { ArtistModel } from '@/domain/models'
+
+export interface AlbumModel {
+  artist_id: string
   name: string
-  artistId: string
+  year?: string
+  youtube?: string
+  images: string[]
+  artist?: ArtistModel
 }
