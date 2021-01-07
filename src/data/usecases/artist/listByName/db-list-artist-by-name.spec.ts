@@ -39,7 +39,7 @@ describe('DbLoadArtistByName UseCase', () => {
         await sut.loadByName(mockAddArtistName)
         expect(addSpy).toHaveBeenCalledWith(mockAddArtistName)
     })
-    
+   
     test('Should throw if loadArtistByName throws', async () => {
         const { sut, loadArtistByName } = makeSut()
         jest.spyOn(loadArtistByName, 'loadByName').mockImplementationOnce((): never => {
@@ -50,4 +50,10 @@ describe('DbLoadArtistByName UseCase', () => {
         await expect(promise).rejects.toThrow()
     })
 
+    test('Should return ArtistModel on success', async () => {
+        const { sut } = makeSut()
+        const mockAddArtistName = 'any_name'
+        const response = await sut.loadByName(mockAddArtistName)
+        expect(response).toEqual(mockArtistModel())
+    })
 })
