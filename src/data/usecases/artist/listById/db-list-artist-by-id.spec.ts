@@ -1,6 +1,5 @@
 import { LoadArtistByIdRepository } from "@/data/protocols/db/artist/load-artist-by-id-repository"
 import { ArtistModel } from "@/domain/models"
-import { AddArtistModel } from "@/domain/usecases/artists/add-artist"
 import { DbLoadArtistById } from "./db-list-artist-by-id"
 
 const mockArtistModel = (): ArtistModel => ({
@@ -51,12 +50,10 @@ describe('DbAddArtist UseCase', () => {
         await expect(promise).rejects.toThrow()
     })
 
-    // test('Should return ArtistModel on success', async () => {
-    //     const { sut } = makeSut()
-    //     const mockAddArtist = {
-    //         name: 'any_name'
-    //     }
-    //     const response = await sut.add(mockAddArtist)
-    //     expect(response).toEqual(mockArtistModel())
-    // })
+    test('Should return ArtistModel on success', async () => {
+        const { sut } = makeSut()
+        const mockAddArtistName = 'any_id'
+        const response = await sut.loadById(mockAddArtistName)
+        expect(response).toEqual(mockArtistModel())
+    })
 })
