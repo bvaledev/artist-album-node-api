@@ -9,34 +9,34 @@ let artistCollection: Collection
 
 const makeSut = (): AlbumMongoRepository => new AlbumMongoRepository()
 
-const mockAlbumModel = (artistId: ObjectId | string, name?: string): AddAlbumModel => ({
+export const mockAlbumModel = (artistId: ObjectId | string, name?: string): AddAlbumModel => ({
   artist_id: new ObjectId(artistId),
   name: name || faker.database.column(),
-  year: faker.date.future(2000).toString(),
+  year: '2000',
   youtube: faker.internet.url(),
   images: [' image_1', 'image_2', 'image_3', 'image_4']
 })
 
-const mockArtistInsert = async (): Promise<string> => {
+export const mockArtistInsert = async (): Promise<string> => {
   const artist = await artistCollection.insertOne({
     name: 'Avenged Sevenfold'
   })
   return artist.ops[0]._id
 }
 
-const mockAlbumInsert = async (name?: string): Promise<AlbumModel> => {
+export const mockAlbumInsert = async (name?: string): Promise<AlbumModel> => {
   const artist = await mockArtistInsert()
   const data = await albumCollection.insertOne({
     artist_id: new ObjectId(artist),
     name: name || faker.database.column(),
-    year: faker.date.future(2000).toString(),
+    year: '2000',
     youtube: faker.internet.url(),
     images: [' image_1', 'image_2', 'image_3', 'image_4']
   })
   return MongoHelper.mapper(data.ops[0])
 }
 
-const mockAlbumInsertMany = async (): Promise<any> => {
+export const mockAlbumInsertMany = async (): Promise<any> => {
   const artist = await mockArtistInsert()
   return await albumCollection.insertMany([
     {
