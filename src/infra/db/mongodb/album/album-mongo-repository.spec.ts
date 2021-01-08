@@ -143,6 +143,18 @@ describe('AlbumMongoRepository', () => {
     })
   })
 
+  describe('loadByArtist()', () => {
+    test('Should return an album on find by artist success', async () => {
+      await mockAlbumInsert('Nightmare')
+      const sut = makeSut()
+      const album = await sut.loadByArtist('Sevenfold')
+      expect(album).toBeTruthy()
+      expect(album.length).toBe(1)
+      expect(album[0].id).toBeTruthy()
+      expect(album[0].name).toBe('Nightmare')
+    })
+  })
+
   describe('loadAll()', () => {
     test('Should return a list of album ASC', async () => {
       await mockAlbumInsertMany()
