@@ -5,8 +5,9 @@ import { AlbumModel } from '@/domain/models'
 import { AddAlbumModel, DeleteAlbum, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
 import { ObjectId } from 'mongodb'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helpers'
+import { LoadAlbumByArtistRepository } from '@/data/protocols/db/album/load-albums-by-artist-repository'
 
-export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName, DeleteAlbum {
+export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName, LoadAlbumByArtistRepository, DeleteAlbum {
   private readonly collection: string = 'albums'
 
   async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<AlbumModel[]> {
@@ -31,6 +32,38 @@ export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, 
     const albumCollection = await MongoHelper.getCollection(this.collection)
     const albumResult = await albumCollection.findOne({ name: new RegExp(name, 'i') })
     return albumResult && MongoHelper.mapper(albumResult)
+  }
+
+  async loadByArtist(artistName: string, order: 'ASC' | 'DESC' = 'ASC', skip: number = 0, limit: number = 10): Promise<AlbumModel[]> {
+    const albumCollection = await MongoHelper.getCollection(this.collection)
+    const albums = await albumCollection.aggregate([
+      {
+        $lookup: {
+          from: 'artists',
+          localField: 'artist_id',
+          foreignField: '_id',
+          as: 'artist'
+        }
+      },
+      {
+        $project: {
+          artist_id: 0,
+          'artist._id': 0
+        }
+      },
+      {
+        $unwind: '$artist'
+      }, {
+        $match: {
+          'artist.name': new RegExp(artistName, 'i')
+        }
+      }
+    ]).skip(skip)
+      .limit(limit)
+      .sort({ name: order === 'ASC' ? 1 : -1 })
+      .toArray()
+
+    return albums && MongoHelper.mapperList(albums)
   }
 
   async update(id: string, album: AddAlbumModel): Promise<AlbumModel> {
