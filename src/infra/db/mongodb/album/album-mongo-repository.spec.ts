@@ -167,6 +167,14 @@ describe('AlbumMongoRepository', () => {
       expect(artistList.length).toBe(5)
       expect(artistList[0].name).toBe('City of Evil')
     })
+
+    test('Should return a list of album DESC', async () => {
+      await mockAlbumInsertMany()
+      const sut = makeSut()
+      const artistList = await sut.loadByArtist('even', 'DESC', 0, 5)
+      expect(artistList.length).toBe(5)
+      expect(artistList[0].name).toBe('Nightmare')
+    })
   })
 
   describe('loadAll()', () => {
