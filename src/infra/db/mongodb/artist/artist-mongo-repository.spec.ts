@@ -68,10 +68,7 @@ describe('ArtistMongoRepository', () => {
       const sut = makeSut()
       const newData = await artistCollection.insertOne({ name: 'any_name' })
       const normalizedData = MongoHelper.mapper(newData.ops[0])
-      console.info('insert: ', newData.ops[0])
       const artist = await sut.update(normalizedData.id, { name: 'new_name' })
-      console.info('update: ', artist)
-      console.log(artist)
       expect(artist).toBeTruthy()
       expect(artist.name).toBe('new_name')
     })
@@ -79,8 +76,6 @@ describe('ArtistMongoRepository', () => {
     test('Should return null if update fails', async () => {
       const sut = makeSut()
       const artist = await sut.update('5ff74f686ff63d0e30e7eba3', { name: 'new_name' })
-      console.info('update: ', artist)
-      console.log(artist)
       expect(artist).toBeFalsy()
     })
   })
@@ -100,7 +95,7 @@ describe('ArtistMongoRepository', () => {
     test('Should return a list of artist ASC', async () => {
       await mockArtistInsertMany()
       const sut = makeSut()
-      const artistList = await sut.listAll('ASC',5, 5)
+      const artistList = await sut.listAll('ASC', 5, 5)
       expect(artistList.length).toBe(5)
       expect(artistList[0].name).toBe('fany_6')
     })
@@ -108,7 +103,7 @@ describe('ArtistMongoRepository', () => {
     test('Should return a list of artist DESC', async () => {
       await mockArtistInsertMany()
       const sut = makeSut()
-      const artistList = await sut.listAll('DESC',5, 5)
+      const artistList = await sut.listAll('DESC', 5, 5)
       expect(artistList.length).toBe(5)
       expect(artistList[0].name).toBe('gany_7')
     })
