@@ -102,7 +102,7 @@ describe('AlbumMongoRepository', () => {
   })
 
   describe('update()', () => {
-    test('Should return artist on success update', async () => {
+    test('Should return album on success update', async () => {
       const sut = makeSut()
       const normalizedData = await mockAlbumInsert()
       const artist = await sut.update(normalizedData.id, mockAlbumModel(normalizedData.artist_id, 'new_name'))
