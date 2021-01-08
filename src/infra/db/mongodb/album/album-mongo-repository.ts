@@ -2,11 +2,11 @@ import { AddAlbumRepository } from '@/data/protocols/db/album/add-albums-reposit
 import { LoadAllAlbumRepository } from '@/data/protocols/db/album/list-all-albums-repository'
 import { UpdateAlbumRepository } from '@/data/protocols/db/album/update-albums-repository'
 import { AlbumModel } from '@/domain/models'
-import { AddAlbumModel, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
+import { AddAlbumModel, DeleteAlbum, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
 import { ObjectId } from 'mongodb'
-import { MongoHelper } from '../helpers/mongo-helpers'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helpers'
 
-export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName {
+export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName, DeleteAlbum {
   private readonly collection: string = 'albums'
 
   async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<AlbumModel[]> {
@@ -47,5 +47,11 @@ export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, 
     }
 
     return null
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const albumCollection = await MongoHelper.getCollection(this.collection)
+    const action = await albumCollection.deleteOne({ _id: new ObjectId(id) })
+    return !!action.result.ok
   }
 }
