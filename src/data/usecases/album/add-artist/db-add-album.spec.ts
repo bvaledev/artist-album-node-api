@@ -81,4 +81,14 @@ describe('DbAddAlbum UseCase', () => {
         await sut.add(mockAddAlbumModel('a7x'))
         expect(addSpy).toHaveBeenCalledWith(mockAddAlbumModel('a7x'))
     })
+
+    test('Should throw if AddAlbumRepository throws', async () => {
+        const { sut, addAlbumRepositoryStub, loadAlbumByNameRepositoryStub } = makeSut()
+        jest.spyOn(loadAlbumByNameRepositoryStub, 'loadByName').mockReturnValue(Promise.resolve(null))
+        jest.spyOn(addAlbumRepositoryStub, 'add').mockImplementationOnce((): never => {
+            throw new Error()
+        })
+        const promise = sut.add(mockAddAlbumModel('a7x'))
+        await expect(promise).rejects.toThrow()
+    })
 })
