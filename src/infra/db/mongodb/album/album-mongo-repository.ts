@@ -1,11 +1,11 @@
 import { AddAlbumRepository } from '@/data/protocols/db/album/add-albums-repository'
 import { UpdateAlbumRepository } from '@/data/protocols/db/album/update-albums-repository'
 import { AlbumModel } from '@/domain/models'
-import { AddAlbumModel, LoadAlbumById } from '@/domain/usecases/album'
+import { AddAlbumModel, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
 import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helpers'
 
-export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, UpdateAlbumRepository {
+export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, UpdateAlbumRepository, LoadAlbumByName {
   private readonly collection: string = 'albums'
   async add(albumData: AddAlbumModel): Promise<AlbumModel> {
     const albumCollection = await MongoHelper.getCollection(this.collection)
@@ -16,6 +16,12 @@ export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, 
   async loadById(id: string): Promise<AlbumModel> {
     const albumCollection = await MongoHelper.getCollection(this.collection)
     const albumResult = await albumCollection.findOne({ id_: id })
+    return albumResult && MongoHelper.mapper(albumResult)
+  }
+
+  async loadByName(name: string): Promise<AlbumModel> {
+    const albumCollection = await MongoHelper.getCollection(this.collection)
+    const albumResult = await albumCollection.findOne({ name: new RegExp(name, 'i') })
     return albumResult && MongoHelper.mapper(albumResult)
   }
 
