@@ -98,4 +98,10 @@ describe('DbAddAlbum UseCase', () => {
         const response = await sut.add(mockAddAlbumModel('a7x'))
         expect(response).toEqual(mockAlbumModel('a7x'))
     })
+
+    test('Should return null if album alread exists', async () => {
+        const { sut } = makeSut()
+        const response = await sut.add(mockAddAlbumModel('a7x'))
+        expect(response).toEqual(null)
+    })
 })
