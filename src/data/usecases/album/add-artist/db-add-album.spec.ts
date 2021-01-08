@@ -91,4 +91,11 @@ describe('DbAddAlbum UseCase', () => {
         const promise = sut.add(mockAddAlbumModel('a7x'))
         await expect(promise).rejects.toThrow()
     })
+
+    test('Should return AlbumModel on success', async () => {
+        const { sut, loadAlbumByNameRepositoryStub } = makeSut()
+        jest.spyOn(loadAlbumByNameRepositoryStub, 'loadByName').mockReturnValue(Promise.resolve(null))
+        const response = await sut.add(mockAddAlbumModel('a7x'))
+        expect(response).toEqual(mockAlbumModel('a7x'))
+    })
 })
