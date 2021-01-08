@@ -3,10 +3,10 @@
 
 | Authentication | Artistas      | Albums          |
 | :------------- | :------------ | :-------------- |
-| [✔]SignUp      | [✔]Add        | [❌]Add          |
+| [✔]SignUp      | [✔]Add        | [✔]Add          |
 | [✔]Login       | [✔]Update     | [❌]Update       |
-| -              | [✔]Delete     | [❌]Delete       |
-| -              | [✔]LoadById   | [❌]LoadById     |
-| -              | [✔]LoadByName | [❌]LoadByName   |
+| -              | [✔]Delete     | [✔]Delete       |
+| -              | [✔]LoadById   | [✔]LoadById     |
+| -              | [✔]LoadByName | [✔]LoadByName   |
 | -              | [✔]LoadAll    | [❌]LoadByArtist |
-| -              | -             | [❌]LoadAll      |
+| -              | -             | [✔]LoadAll      |
