@@ -153,6 +153,12 @@ describe('AlbumMongoRepository', () => {
       expect(album[0].id).toBeTruthy()
       expect(album[0].name).toBe('Nightmare')
     })
+
+    test('Should return void list if not exists', async () => {
+      const sut = makeSut()
+      const album = await sut.loadByArtist('Sevenfold')
+      expect(album.length).toBe(0)
+    })
   })
 
   describe('loadAll()', () => {
