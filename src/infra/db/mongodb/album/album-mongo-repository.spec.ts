@@ -160,4 +160,13 @@ describe('AlbumMongoRepository', () => {
       expect(artistList[0].name).toBe('Nightmare')
     })
   })
+
+  describe('delete()', () => {
+    test('Should return true if deleted', async () => {
+      const album = await mockAlbumInsert()
+      const sut = makeSut()
+      const deleted = await sut.delete(album.id)
+      expect(deleted).toBe(true)
+    })
+  })
 })
