@@ -1,12 +1,20 @@
 import { AddAlbumRepository } from '@/data/protocols/db/album/add-albums-repository'
+import { LoadAllAlbumRepository } from '@/data/protocols/db/album/list-all-albums-repository'
 import { UpdateAlbumRepository } from '@/data/protocols/db/album/update-albums-repository'
 import { AlbumModel } from '@/domain/models'
 import { AddAlbumModel, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
 import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helpers'
 
-export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, UpdateAlbumRepository, LoadAlbumByName {
+export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName {
   private readonly collection: string = 'albums'
+
+  async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<AlbumModel[]> {
+    const albumCollection = await MongoHelper.getCollection(this.collection)
+    const albumResult = await albumCollection.find({}).skip(skip).limit(limit).sort({ name: order === 'ASC' ? 1 : -1 }).toArray()
+    return albumResult && MongoHelper.mapperList(albumResult)
+  }
+
   async add(albumData: AddAlbumModel): Promise<AlbumModel> {
     const albumCollection = await MongoHelper.getCollection(this.collection)
     const albumResult = await albumCollection.insertOne(albumData)
