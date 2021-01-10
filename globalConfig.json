@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"mongoUri":"mongodb://127.0.0.1:64471/jest?","mongoDBName":"jest"}
-=======
-{"mongoUri":"mongodb://127.0.0.1:52420/jest?","mongoDBName":"jest"}
->>>>>>> da1e541501c375319e388076ac9f7d7a8c6ce173
+{"mongoUri":"mongodb://127.0.0.1:61860/jest?","mongoDBName":"jest"}
