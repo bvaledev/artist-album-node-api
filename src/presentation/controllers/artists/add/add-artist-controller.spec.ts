@@ -85,4 +85,11 @@ describe('AddArtistController', () => {
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new ServerError()))
   })
+
+  test('Should return 403 if AddArtist return null', async () => {
+    const { sut, addArtistStub } = makeSut()
+    jest.spyOn(addArtistStub, 'add').mockReturnValueOnce(Promise.resolve(null))
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(forbidden(new DataExistsError()))
+  })
 })
