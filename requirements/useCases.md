@@ -3,7 +3,7 @@
 
 | Authentication | Artistas      | Albums          |
 | :------------- | :------------ | :-------------- |
-| [✔]SignUp      | [✔]Add        | [❌]Add          |
+| [✔]SignUp      | [✔]Add        | [✔]Add          |
 | [✔]Login       | [✔]Update     | [❌]Update       |
 | -              | [✔]Delete     | [❌]Delete       |
 | -              | [✔]LoadById   | [❌]LoadById     |
