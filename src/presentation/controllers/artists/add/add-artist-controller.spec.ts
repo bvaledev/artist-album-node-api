@@ -76,4 +76,13 @@ describe('AddArtistController', () => {
       name: 'any_name'
     })
   })
+
+  test('Should return 500 if AddArtist throws', async () => {
+    const { sut, addArtistStub } = makeSut()
+    jest.spyOn(addArtistStub, 'add').mockImplementationOnce((): never => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError()))
+  })
 })
