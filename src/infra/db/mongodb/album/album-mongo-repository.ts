@@ -1,13 +1,16 @@
+import { ObjectId } from 'mongodb'
 import { AddAlbumRepository } from '@/data/protocols/db/album/add-albums-repository'
 import { LoadAllAlbumRepository } from '@/data/protocols/db/album/list-all-albums-repository'
 import { UpdateAlbumRepository } from '@/data/protocols/db/album/update-albums-repository'
 import { AlbumModel } from '@/domain/models'
-import { AddAlbumModel, DeleteAlbum, LoadAlbumById, LoadAlbumByName } from '@/domain/usecases/album'
-import { ObjectId } from 'mongodb'
+import { AddAlbumModel } from '@/domain/usecases/album'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helpers'
 import { LoadAlbumByArtistRepository } from '@/data/protocols/db/album/load-albums-by-artist-repository'
+import { DeleteAlbumRepository } from '@/data/protocols/db/album/delete-albums-repository'
+import { LoadAlbumByIdRepository } from '@/data/protocols/db/album/load-albums-by-id-repository'
+import { LoadAlbumByNameRepository } from '@/data/protocols/db/album/load-albums-by-name-repository'
 
-export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumById, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByName, LoadAlbumByArtistRepository, DeleteAlbum {
+export class AlbumMongoRepository implements AddAlbumRepository, LoadAlbumByIdRepository, LoadAllAlbumRepository, UpdateAlbumRepository, LoadAlbumByNameRepository, LoadAlbumByArtistRepository, DeleteAlbumRepository {
   private readonly collection: string = 'albums'
 
   async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<AlbumModel[]> {

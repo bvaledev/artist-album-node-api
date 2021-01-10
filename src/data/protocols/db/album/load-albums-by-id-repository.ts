@@ -1,5 +1,5 @@
 import { AlbumModel } from '@/domain/models'
 
-export interface LoadAddAlbumByIdRepository {
+export interface LoadAlbumByIdRepository {
     loadById (id: string): Promise<AlbumModel>
 }
