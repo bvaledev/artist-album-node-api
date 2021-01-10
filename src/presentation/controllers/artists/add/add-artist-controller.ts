@@ -20,7 +20,6 @@ export class AddArtistController implements Controller {
       if (!artist) {
         return forbidden(new DataExistsError())
       }
-
       return ok(artist)
     } catch (error) {
       return serverError(error)

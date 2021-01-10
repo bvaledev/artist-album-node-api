@@ -9,8 +9,8 @@ const mockArtistModel = (): ArtistModel => ({
 
 const mockLoadArtistByNameRepository = (): LoadArtistByNameRepository => {
     class LoadArtistByNameRepository implements LoadArtistByNameRepository {
-        async loadByName(name: string): Promise<ArtistModel> {
-            return Promise.resolve(mockArtistModel())
+        async loadByName(name: string): Promise<ArtistModel[]> {
+            return Promise.resolve([mockArtistModel()])
         }
     }
     return new LoadArtistByNameRepository()
@@ -54,6 +54,14 @@ describe('DbLoadArtistByName UseCase', () => {
         const { sut } = makeSut()
         const mockAddArtistName = 'any_name'
         const response = await sut.loadByName(mockAddArtistName)
-        expect(response).toEqual(mockArtistModel())
+        expect(response).toEqual([mockArtistModel()])
+    })
+
+    test('Should return null on fails', async () => {
+        const { sut, loadArtistByName } = makeSut()
+        jest.spyOn(loadArtistByName, 'loadByName').mockReturnValueOnce(Promise.resolve(null))
+        const mockAddArtistName = 'any_name'
+        const response = await sut.loadByName(mockAddArtistName)
+        expect(response).toBeFalsy()
     })
 })
