@@ -92,4 +92,13 @@ describe('AddArtistController', () => {
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new DataExistsError()))
   })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok({
+      id: 'any_id',
+      name: 'any_name'
+    }))
+  })
 })
