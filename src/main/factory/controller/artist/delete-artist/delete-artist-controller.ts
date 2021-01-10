@@ -3,6 +3,6 @@ import { DeleteArtistController } from '@/presentation/controllers/artists/delet
 import { Controller } from '@/presentation/protocols'
 import { makeDeleteArtistValidationComposite } from './delete-artist-validation'
 
-export const makeUpdateArtistControllerFactory = (): Controller => {
+export const makeDeleteArtistControllerFactory = (): Controller => {
   return new DeleteArtistController(makeDeleteArtistValidationComposite(), makeDbDeleteArtistFactory())
 }
