@@ -20,8 +20,8 @@ const mockAddArtistRepository = (): AddArtistRepository => {
 
 const mockLoadArtistByNameRepositoryStub = (): LoadArtistByNameRepository => {
     class LoadArtistByNameRepositoryStub implements LoadArtistByNameRepository {
-        async loadByName(name: string): Promise<ArtistModel> {
-            return Promise.resolve(mockArtistModel())
+        async loadByName(name: string): Promise<ArtistModel[]> {
+            return Promise.resolve([mockArtistModel()])
         }
     }
     return new LoadArtistByNameRepositoryStub()

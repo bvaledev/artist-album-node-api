@@ -9,13 +9,14 @@ export class DbAddArtist implements AddArtist {
         private readonly loadArtistByNameRepository: LoadArtistByNameRepository
     ) {}
     async add(artist: AddArtistModel): Promise<ArtistModel> {
-        const artistExists = await this.loadArtistByNameRepository.loadByName(artist.name)
-
-        if(!artistExists){
-            const data = this.addArtistRepository.add(artist)
+        let artistExists:ArtistModel[]= await this.loadArtistByNameRepository.loadByName(artist.name)
+        console.log('1', artistExists, typeof artistExists)
+        if(artistExists === null || Array.isArray(artistExists) && artistExists.length === 0){
+            const data = await this.addArtistRepository.add(artist)
+            console.log('2', data)
             return data
         }
-
+        console.log('null', null)
         return null
     }
 }

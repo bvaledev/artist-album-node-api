@@ -81,13 +81,13 @@ describe('ArtistMongoRepository', () => {
   })
 
   describe('loadByName()', () => {
-    test('Should return an artist on find success', async () => {
-      mockArtistInsert()
+    test('Should return an list of artist on find success', async () => {
+      await mockArtistInsertMany()
       const sut = makeSut()
-      const artist = await sut.loadByName('any_name')
-      expect(artist).toBeTruthy()
-      expect(artist.id).toBeTruthy()
-      expect(artist.name).toBe('any_name')
+      const artist = await sut.loadByName('bany_2')
+      expect(artist.length).toBe(1)
+      expect(artist[0].id).toBeTruthy()
+      expect(artist[0].name).toBe('bany_2')
     })
   })
 

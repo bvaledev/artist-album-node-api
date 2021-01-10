@@ -39,10 +39,10 @@ export class ArtistMongoRepository implements AddArtistRepository, UpdateArtistR
     return artistData && MongoHelper.mapper(artistData)
   }
 
-  async loadByName(name: string): Promise<ArtistModel> {
+  async loadByName(name: string): Promise<ArtistModel[]> {
     const artistCollection = await MongoHelper.getCollection(this.collection)
-    const artistData = await artistCollection.findOne({ name: new RegExp(name, 'i') })
-    return artistData && MongoHelper.mapper(artistData)
+    const artistData = await artistCollection.find({ name: new RegExp(name, 'i') }).toArray()
+    return artistData && MongoHelper.mapperList(artistData)
   }
 
   async listAll(order: 'ASC' | 'DESC', skip: number, limit: number): Promise<ArtistModel[]> {
