@@ -67,4 +67,13 @@ describe('AddArtistController', () => {
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
   })
+
+  test('Should call AddArtist with correct values', async () => {
+    const { sut, addArtistStub } = makeSut()
+    const addSpy = jest.spyOn(addArtistStub, 'add')
+    await sut.handle(mockRequest())
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name'
+    })
+  })
 })
