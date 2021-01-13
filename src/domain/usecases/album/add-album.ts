@@ -6,7 +6,7 @@ export type AddAlbumModel = {
   name: string
   year?: string
   youtube?: string
-  images: string[]
+  images: string
 }
 
 export interface AddAlbum {

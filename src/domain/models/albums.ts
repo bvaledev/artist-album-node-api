@@ -6,6 +6,6 @@ export interface AlbumModel {
   name: string
   year?: string
   youtube?: string
-  images: string[]
+  images: string
   artist?: ArtistModel
 }
