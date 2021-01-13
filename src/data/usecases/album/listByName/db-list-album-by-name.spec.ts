@@ -6,7 +6,7 @@ const mockAlbumModel = (): AlbumModel => ({
     id: 'any_id',
     artist_id: 'any_id',
     name: 'any_name',
-    images: []
+    cover: 'any_image'
 })
 
 const mockLoadAlbumByNameRepository = (): LoadAlbumByNameRepository => {

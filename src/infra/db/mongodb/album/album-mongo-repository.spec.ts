@@ -14,7 +14,7 @@ export const mockAlbumModel = (artistId: ObjectId | string, name?: string): AddA
   name: name || faker.database.column(),
   year: '2000',
   youtube: faker.internet.url(),
-  images: [' image_1', 'image_2', 'image_3', 'image_4']
+  cover: 'any_image'
 })
 
 export const mockArtistInsert = async (): Promise<string> => {
@@ -31,7 +31,7 @@ export const mockAlbumInsert = async (name?: string): Promise<AlbumModel> => {
     name: name || faker.database.column(),
     year: '2000',
     youtube: faker.internet.url(),
-    images: [' image_1', 'image_2', 'image_3', 'image_4']
+    cover: 'any_image'
   })
   return MongoHelper.mapper(data.ops[0])
 }
@@ -44,35 +44,35 @@ export const mockAlbumInsertMany = async (): Promise<any> => {
       name: 'Nightmare',
       year: '2010',
       youtube: 'https://www.youtube.com/watch?v=XptslJml1do',
-      images: [' image_1', 'image_2', 'image_3', 'image_4']
+      cover: 'any_image'
     },
     {
       artist_id: new ObjectId(artist),
       name: 'Hail to the King',
       year: '2013',
       youtube: 'https://www.youtube.com/watch?v=8ac0KEUli-Q&list=PLD0fpaGgcqI2RzN6NpslXModT0mJMW3Jl',
-      images: [' image_1', 'image_2', 'image_3', 'image_4']
+      cover: 'any_image'
     },
     {
       artist_id: new ObjectId(artist),
       name: 'City of Evil',
       year: '2005',
       youtube: 'https://www.youtube.com/watch?v=M66jWN9CXV8',
-      images: [' image_1', 'image_2', 'image_3', 'image_4']
+      cover: 'any_image'
     },
     {
       artist_id: new ObjectId(artist),
       name: 'City of Evil',
       year: '2005',
       youtube: 'https://www.youtube.com/watch?v=M66jWN9CXV8',
-      images: [' image_1', 'image_2', 'image_3', 'image_4']
+      cover: 'any_image'
     },
     {
       artist_id: new ObjectId(artist),
       name: 'City of Evil',
       year: '2005',
       youtube: 'https://www.youtube.com/watch?v=M66jWN9CXV8',
-      images: [' image_1', 'image_2', 'image_3', 'image_4']
+      cover: 'any_image'
     }
   ])
 }

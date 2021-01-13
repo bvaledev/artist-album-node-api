@@ -7,7 +7,7 @@ const mockListAlbumModel = (): AlbumModel[] => ([
         id: 'any_id',
         name: 'any_name',
         artist_id: 'any_id',
-        images: [],
+        cover: 'any_image'
     }
 ])
 

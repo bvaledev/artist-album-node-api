@@ -10,7 +10,7 @@ const mockAlbumModel = (name: string): AlbumModel => ({
     name: name,
     year: '2000',
     youtube: 'http://youtube.com',
-    images: [' image_1', 'image_2', 'image_3', 'image_4']
+    cover: 'any_image'
 })
 
 const mockAddAlbumModel = (name: string): AddAlbumModel => ({
@@ -18,7 +18,7 @@ const mockAddAlbumModel = (name: string): AddAlbumModel => ({
     name: name,
     year: '2000',
     youtube: 'http://youtube.com',
-    images: [' image_1', 'image_2', 'image_3', 'image_4']
+    cover: 'any_image'
 })
 
 const mockAddAlbumRepository = (): AddAlbumRepository => {
