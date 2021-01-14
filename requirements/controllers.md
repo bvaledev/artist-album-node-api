@@ -6,5 +6,5 @@
 | [✔]Login       | [✔]Update     | [✔]Update       |
 | -              | [✔]Delete     | [✔]Delete       |
 | -              | [✔]LoadByName | [✔]LoadByName   |
-| -              | [✔]LoadAll    | [❌]LoadByArtist |
+| -              | [✔]LoadAll    | [✔]LoadByArtist |
 | -              | -             | [✔]LoadAll      |
