@@ -7,4 +7,4 @@
 | -              | [✔]Delete     | [✔]Delete       |
 | -              | [✔]LoadByName | [❌]LoadByName   |
 | -              | [✔]LoadAll    | [❌]LoadByArtist |
-| -              | -             | [❌]LoadAll      |
+| -              | -             | [✔]LoadAll      |
