@@ -4,7 +4,7 @@ import { DataExistsError, MissingParamError, ServerError } from '@/presentation/
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers'
 import { HttpRequest } from '@/presentation/protocols'
 import { Validation } from '@/presentation/protocols/validation'
-import { UpdateAlbumController } from './update-artist-controller'
+import { UpdateAlbumController } from './update-album-controller'
 
 export const mockAlbumModel = (): AlbumModel => ({
   id: 'any_id',

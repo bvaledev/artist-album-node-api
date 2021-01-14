@@ -12,6 +12,6 @@ export default (router: Router): void => {
   router.get('/artist', routeAdapter(makeLoadAllArtistControllerFactory()))
   router.get('/artist/find-by-name', routeAdapter(makeLoadByNameArtistControllerFactory()))
   router.post('/artist/add', routeAdapter(makeAddArtistControllerFactory()))
-  router.put('/artist/:id', routeAdapter(makeUpdateArtistControllerFactory()))
-  router.delete('/artist/:id', routeAdapter(makeDeleteArtistControllerFactory()))
+  router.put('/artist/:id/update', routeAdapter(makeUpdateArtistControllerFactory()))
+  router.delete('/artist/:id/delete', routeAdapter(makeDeleteArtistControllerFactory()))
 }
