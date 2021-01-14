@@ -19,7 +19,8 @@ Este repositório é um estudo e prática utilizando os principios, design patte
 Lista de estágio de conclusão das funcionalidades. [✔] significa que está 100% concluído e [❌] está em desenvolvimento
 
 1. [✔] [Casos de Uso](./requirements/useCases.md)
-2. [❌] [Controladores](./requirements/controllers.md)
+2. [✔] [Controladores](./requirements/controllers.md)
+3. [❌] [Refatoração]
 
 
 *Obs.: Em breve colocarei a documentação, casos de erro e sucesso e também comentário nos códigos (tudo depois de refatorar as repetições nos testes)*
