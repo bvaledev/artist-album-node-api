@@ -11,7 +11,6 @@ Este repositório é um estudo e prática utilizando os principios, design patte
 
 | Contato |                      |
 | ------- | -------------------- |
-| E-mail  | brendo@brendo.dev.br |
 | Linkedin  | [linkedin/brendo](https://www.linkedin.com/in/brendomkt/) |
 
 ## **Estágios**
