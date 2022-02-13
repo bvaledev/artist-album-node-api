@@ -5,9 +5,9 @@
 
 # **Artistas e Albuns - Clean Node**
 
-Album de Artistas (músicos ou bandas) é um projeto que tem o objetivo de guardar o seu artista favoritos e seus albums prediletos, você também pode adicionar um link do youtube para assitir.
+Artists album's is a project that contains objectives to save your favorite artists and they album's. You can add a YouTube video link to watch the clips.
 
-Este repositório é um estudo e prática utilizando os principios, design pattern e clean code juntamente com TDD. Um dos objetivos é finalizar a primeira etapa e manter 100% de cobertura de testes. Fiquem a vontade para utilizar nos estudos de vocês. Qualquer dúvida é só entrar em contato pelo email abaixo!
+This application is a study of practices using the best principles of development, design patterns, clean code with TDD (Test-driven development). Furthermore, this principal object is to finish the first step and maintain 100% of tests coverage.
 
 | Contato |                      |
 | ------- | -------------------- |
